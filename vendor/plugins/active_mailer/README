@@ -1,0 +1,66 @@
+ActiveMailer
+============
+
+Introduction goes here.
+
+DHH thinks this is a bad idea and he's wrong. Email needs to have somewhere to put the business
+logic surrounding it, and the controller is not the place for that.
+http://www.robbyonrails.com/articles/2009/11/16/sending-email-controllers-versus-models
+http://twitter.com/dhh/status/5769040367
+http://twitter.com/dhh/status/5769698185
+http://www.loudthinking.com/posts/43-think-of-emails-as-views-delivered-through-smtp
+
+
+Example
+=======
+
+# need the users table
+class CreateActiveMailerTables < ActiveRecord::Migration
+  def self.up
+    create_table :email_users do |t|
+      t.string :email_address
+      t.timestamps
+    end
+    
+    create_table :email_user_associations do |t|
+      t.references :email_user
+      t.string :emailable_type
+      t.integer :emailable_id
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :email_users
+    drop_table :email_user_associations
+  end
+end
+
+
+
+# sample active mailer migration
+class CreateNotificationEmail < ActiveRecord::Migration
+  def self.up
+    create_active_mailer_table :notification_emails do |t|
+      t.integer :registration_id
+      t.string  :kind
+      t.timestamps
+    end
+  end
+
+  def self.down
+    drop_table :notification_emails
+  end
+end
+
+
+Contributing
+============
+
+Bugs/Feature
+http://www.pivotaltracker.com/projects/14211
+
+
+Copyright (c) 2009 [Expected Behavior, LLC], released under the MIT license
+
+
