@@ -12,16 +12,24 @@
 ActiveRecord::Schema.define(:version => 20100112215448) do
 
   create_table "beer_emails", :force => true do |t|
+    t.integer  "sender_id"
+    t.datetime "sent_at"
+    t.string   "subject"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "email_user_associations", :force => true do |t|
+    t.integer  "email_user_id"
+    t.string   "emailable_type"
+    t.integer  "emailable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "email_users", :force => true do |t|
+    t.string   "email_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
